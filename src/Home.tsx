@@ -35,7 +35,16 @@ function Home() {
           {books !== undefined
             ? books.map(book => {
                 const { id, bookName, loaned, author } = book;
-                return <BookContainer key={id} bookName={bookName} loaned={loaned} author={author} />;
+                return (
+                  <BookContainer
+                    key={id}
+                    id={id}
+                    bookName={bookName}
+                    loaned={loaned}
+                    author={author}
+                    fetchBooks={fetchBooks}
+                  />
+                );
               })
             : null}
         </div>
