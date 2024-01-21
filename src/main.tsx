@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <HashRouter>
       <Routes>
-        <Route path="/" Component={Home}></Route>
+        <Route path="/" Component={Home} />
         <Route path="/info" Component={BookInfo} />
       </Routes>
     </HashRouter>

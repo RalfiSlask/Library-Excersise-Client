@@ -1,20 +1,15 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IBook } from './utils/types';
 
-interface IBook {
-  bookName: string;
-  loaned: boolean;
-  author?: string;
-  id: number;
+interface IBookProps {
+  bookObject: IBook;
   fetchBooks: () => Promise<void>;
 }
 
-const BookContainer = ({ bookName, loaned, author, id, fetchBooks }: IBook) => {
+const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(bookName, loaned);
-  }, []);
+  const { bookName, loaned, author, id } = bookObject;
 
   const handleClickOnBook = () => {
     navigate('/info', { state: { bookName, loaned, author } });
@@ -37,7 +32,7 @@ const BookContainer = ({ bookName, loaned, author, id, fetchBooks }: IBook) => {
   const changeStateOfLoaned = async () => {
     try {
       const newLoanedState = !loaned;
-      const promise = await fetch(`http://localhost:3000/loan/:${id}`, {
+      const promise = await fetch(`http://localhost:3000/loan/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,8 +53,10 @@ const BookContainer = ({ bookName, loaned, author, id, fetchBooks }: IBook) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 onClick={handleClickOnBook}>{bookName}</h2>
-      <button onClick={handleClickOnLoaned} className={`${loaned ? 'bg-slate-200' : 'bg-slate-500'} rounded-full`}>
+      <h2 onClick={handleClickOnBook} className="cursor-pointer hover:opacity-70">
+        {bookName}
+      </h2>
+      <button onClick={handleClickOnLoaned} className={`${loaned ? 'bg-slate-400' : 'bg-slate-500'} w-40 rounded-full`}>
         {loaned ? 'give back' : 'loan'}
       </button>
     </div>

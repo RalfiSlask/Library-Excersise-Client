@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
 import BookContainer from './BookContainer';
 import FormContainer from './FormContainer';
-
-interface IBook {
-  id: number;
-  bookName: string;
-  author: string;
-  loaned: boolean;
-}
+import { IBook } from './utils/types';
 
 function Home() {
   const [books, setBooks] = useState<IBook[]>();
@@ -25,26 +19,16 @@ function Home() {
 
   useEffect(() => {
     fetchBooks();
-    console.log(books);
   }, []);
 
   return (
     <>
-      <main className="flex flex-col gap-2">
-        <div className="flex flex-wrap gap-6 mt-[100px]">
+      <main className="flex flex-col gap-2 px-5">
+        <div className="flex flex-wrap gap-6 mt-[100px] justify-center">
           {books !== undefined
             ? books.map(book => {
-                const { id, bookName, loaned, author } = book;
-                return (
-                  <BookContainer
-                    key={id}
-                    id={id}
-                    bookName={bookName}
-                    loaned={loaned}
-                    author={author}
-                    fetchBooks={fetchBooks}
-                  />
-                );
+                const { id } = book;
+                return <BookContainer key={id} bookObject={book} fetchBooks={fetchBooks} />;
               })
             : null}
         </div>
