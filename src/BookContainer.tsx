@@ -33,7 +33,7 @@ const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
     try {
       const newLoanedState = !loaned;
       const promise = await fetch(`http://localhost:3000/loan/${id}`, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -46,18 +46,27 @@ const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
     }
   };
 
+  const deleteBook = async () => {
+    const response = await fetch('http://localhost:3000/');
+  };
+
   const handleClickOnLoaned = async () => {
     await changeStateOfLoaned();
     await fetchBooks();
   };
 
+  const handleClickOnRemove = () => {};
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 items-center">
       <h2 onClick={handleClickOnBook} className="cursor-pointer hover:opacity-70">
         {bookName}
       </h2>
       <button onClick={handleClickOnLoaned} className={`${loaned ? 'bg-slate-400' : 'bg-slate-500'} w-40 rounded-full`}>
         {loaned ? 'give back' : 'loan'}
+      </button>
+      <button onClick={handleClickOnRemove} className="bg-slate-500">
+        Remove Book
       </button>
     </div>
   );

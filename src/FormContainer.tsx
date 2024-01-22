@@ -1,4 +1,6 @@
 import { FormEvent, useState } from 'react';
+import NameInputContainer from './NameInputContainer';
+import AuthorInputContainer from './AuthorInputContainer';
 
 interface IfetchProp {
   fetchBooks: () => Promise<void>;
@@ -55,38 +57,8 @@ const FormContainer = ({ fetchBooks }: IfetchProp) => {
         handleSubmit(e);
       }}
     >
-      <div className="flex flex-col gap-2">
-        <label htmlFor="nameInput">Name</label>
-        <input
-          onInput={e => {
-            handleTitleInput(e);
-          }}
-          className="rounded-md pl-2 py-1"
-          spellCheck="false"
-          autoComplete="none"
-          placeholder="Title"
-          type="text"
-          name="nameInput"
-          id="nameInput"
-          value={inputValues.bookName}
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="authorInput">Author</label>
-        <input
-          onInput={e => {
-            handleAuthorInput(e);
-          }}
-          className="rounded-md pl-2 py-1"
-          placeholder="Author"
-          spellCheck="false"
-          autoComplete="none"
-          type="text"
-          name="authorInput"
-          id="authorInput"
-          value={inputValues.author}
-        />
-      </div>
+      <NameInputContainer handleTitleInput={handleTitleInput} bookName={inputValues.bookName} />
+      <AuthorInputContainer handleAuthorInput={handleAuthorInput} authorName={inputValues.author} />
       <div className="flex justify-center gap-4">
         <button className="bg-blue-500" type="submit">
           Submit
