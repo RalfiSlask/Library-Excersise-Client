@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IBook } from './utils/types';
 
@@ -47,7 +46,19 @@ const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
   };
 
   const deleteBook = async () => {
-    const response = await fetch('http://localhost:3000/');
+    const response = await fetch(`http://localhost:3000/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookObject),
+    });
+    if (response.ok) {
+      const jsonData = await response.json();
+      console.log(jsonData);
+    } else {
+      console.log('error getting response');
+    }
   };
 
   const handleClickOnLoaned = async () => {
@@ -55,7 +66,10 @@ const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
     await fetchBooks();
   };
 
-  const handleClickOnRemove = () => {};
+  const handleClickOnRemove = async () => {
+    await deleteBook();
+    await fetchBooks();
+  };
 
   return (
     <div className="flex flex-col gap-4 items-center">
