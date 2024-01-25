@@ -13,7 +13,7 @@ const NameInputContainer: React.FC<INameInputProps> = ({ handleTitleInput, bookN
         onInput={e => {
           handleTitleInput(e);
         }}
-        className="rounded-md pl-2 py-2"
+        className="input"
         spellCheck="false"
         autoComplete="none"
         placeholder="Title"

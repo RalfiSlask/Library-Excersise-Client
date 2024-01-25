@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { IBook } from './utils/types';
+import { IBook } from '../../utils/types';
 
 interface IBookProps {
   bookObject: IBook;
@@ -13,20 +13,6 @@ const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
   const handleClickOnBook = () => {
     navigate('/info', { state: { bookName, loaned, author } });
   };
-
-  const array = [
-    { id: 1, book: 'hej' },
-    { id: 2, book: 'mumma' },
-  ];
-
-  const newArray = array.map(item => {
-    if (item.id === 2) {
-      return { ...item, book: 'Snuffe' };
-    } else {
-      return item;
-    }
-  });
-  console.log(newArray);
 
   const changeStateOfLoaned = async () => {
     try {

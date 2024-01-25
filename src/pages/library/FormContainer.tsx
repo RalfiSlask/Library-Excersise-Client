@@ -12,6 +12,10 @@ const FormContainer = ({ fetchBooks }: IfetchProp) => {
     author: '',
   });
 
+  const handleReset = () => {
+    setInputValues({ bookName: '', author: '' });
+  };
+
   const handleTitleInput = (e: FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     setInputValues(prev => ({ ...prev, bookName: target.value }));
@@ -60,10 +64,10 @@ const FormContainer = ({ fetchBooks }: IfetchProp) => {
       <NameInputContainer handleTitleInput={handleTitleInput} bookName={inputValues.bookName} />
       <AuthorInputContainer handleAuthorInput={handleAuthorInput} authorName={inputValues.author} />
       <div className="flex justify-center gap-4">
-        <button className="bg-blue-500" type="submit">
+        <button className="button-purple" type="submit">
           Submit
         </button>
-        <button className="bg-blue-500" type="reset">
+        <button onClick={handleReset} className="button-purple" type="reset">
           Reset
         </button>
       </div>

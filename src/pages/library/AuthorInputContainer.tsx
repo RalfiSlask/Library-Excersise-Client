@@ -13,7 +13,7 @@ const AuthorInputContainer: React.FC<IAuthorInputProps> = ({ handleAuthorInput, 
         onInput={e => {
           handleAuthorInput(e);
         }}
-        className="rounded-md pl-2 py-2"
+        className="input"
         placeholder="Author"
         spellCheck="false"
         autoComplete="none"

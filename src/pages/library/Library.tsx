@@ -1,11 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import BookContainer from './BookContainer';
 import FormContainer from './FormContainer';
-import { IBook } from './utils/types';
+import { useLocation } from 'react-router-dom';
+import { LibraryContext } from '../../context/LibraryContext';
 
-function Home() {
-  const [books, setBooks] = useState<IBook[]>([]);
-  const [error, setError] = useState<string | null>(null);
+function Library() {
+  const libraryContext = useContext(LibraryContext);
+
+  if (!libraryContext) {
+    return;
+  }
+
+  const { books, error, setBooks, setError } = libraryContext;
+
+  const location = useLocation();
+  const email = location.state.email;
+  useEffect(() => {
+    console.log(location.state);
+    console.log(email);
+  }, []);
+
   const fetchBooks = async () => {
     setError(null);
     try {
@@ -24,14 +38,11 @@ function Home() {
     }
   };
 
-  useEffect(() => {
-    fetchBooks();
-    console.log(books);
-  }, []);
-
   return (
     <>
       <main className="flex flex-col gap-2 px-5 w-[400px]">
+        <button>Logout</button>
+        <p>Logged in as {email}</p>
         <div className="flex flex-wrap gap-6 mt-[100px] justify-center">
           {error ? (
             <p>Error: {error}</p>
@@ -50,4 +61,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Library;
