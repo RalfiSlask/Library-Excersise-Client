@@ -1,7 +1,7 @@
 import { LoginContext } from '../../context/LoginContext';
 import { useContext } from 'react';
 
-const passwordInputContainer = () => {
+const PasswordInputContainer = () => {
   const loginContext = useContext(LoginContext);
 
   if (!loginContext) {
@@ -30,4 +30,4 @@ const passwordInputContainer = () => {
   );
 };
 
-export default passwordInputContainer;
+export default PasswordInputContainer;

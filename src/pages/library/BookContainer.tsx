@@ -58,14 +58,17 @@ const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 items-center">
+    <div className="flex flex-col gap-4 items-center bg-white p-4 rounded-xl">
       <h2 onClick={handleClickOnBook} className="cursor-pointer hover:opacity-70">
         {bookName}
       </h2>
-      <button onClick={handleClickOnLoaned} className={`${loaned ? 'bg-slate-400' : 'bg-slate-500'} w-40 rounded-full`}>
+      <button
+        onClick={handleClickOnLoaned}
+        className={`${loaned ? 'bg-[#b73d86]' : 'bg-[#7F265B]'}  text-white py-2 w-40 rounded-full`}
+      >
         {loaned ? 'give back' : 'loan'}
       </button>
-      <button onClick={handleClickOnRemove} className="bg-slate-500">
+      <button onClick={handleClickOnRemove} className="bg-[#7F265B] text-white py-2 w-40 rounded-full">
         Remove Book
       </button>
     </div>

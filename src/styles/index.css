@@ -1,6 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root,
+#root,
+body {
+  width: 100%;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  background-color: rgb(237, 236, 236);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;

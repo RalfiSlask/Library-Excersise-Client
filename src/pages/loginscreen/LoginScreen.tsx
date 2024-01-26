@@ -1,6 +1,8 @@
 import { FormEvent, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../context/LoginContext';
+import EmailInputContainer from './EmailInputContainer';
+import PasswordInputContainer from './PasswordInputContainer';
 
 const LoginScreen = () => {
   const loginContext = useContext(LoginContext);
@@ -35,7 +37,7 @@ const LoginScreen = () => {
         if (jsonData.email) {
           localStorage.setItem('user', JSON.stringify({ id: jsonData.id, email: jsonData.email }));
           setLoggedInUser({ id: jsonData.id, email: jsonData.email });
-          navigate('/library', { state: { email: jsonData.email } });
+          navigate('/library');
           setLoginInfo({ email: '', password: '' });
         } else {
           setErrorMessage('User does not exist');
@@ -48,23 +50,31 @@ const LoginScreen = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await postLoginInfo();
+    if (loginInfo.email.trim().length <= 0 || loginInfo.password.trim().length <= 0) {
+      alert('You have to fill in inputs');
+    } else {
+      await postLoginInfo();
+    }
   };
 
   const handleClickCreateAccount = () => {
+    setLoginInfo({ email: '', password: '' });
+    setErrorMessage('');
     navigate('/account');
   };
 
   return (
-    <div className="flex flex-col gap-10 mt-[200px]">
+    <div className="flex flex-col gap-10 items-center mt-[200px] w-[600px]">
       <h1 className="text-[#525252] text-[2.25rem] font-bold">Login to your Account</h1>
       <form
         onSubmit={e => {
           handleSubmit(e);
         }}
         id="formInput"
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 w-[400px]"
       >
+        <EmailInputContainer />
+        <PasswordInputContainer />
         <div className="flex justify-between">
           <div className="flex gap-2 items-center">
             <div

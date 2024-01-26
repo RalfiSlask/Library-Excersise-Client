@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { LoginContext } from '../../context/LoginContext';
 
-const emailInputContainer = () => {
+const EmailInputContainer = () => {
   const loginContext = useContext(LoginContext);
 
   if (!loginContext) {
@@ -34,4 +34,4 @@ const emailInputContainer = () => {
   );
 };
 
-export default emailInputContainer;
+export default EmailInputContainer;

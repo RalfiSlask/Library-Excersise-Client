@@ -5,7 +5,7 @@ const BookInfo = () => {
   const navigate = useNavigate();
 
   const handleClickOnGoBack = () => {
-    navigate('/');
+    navigate('/library');
   };
 
   const { bookName, loaned, author } = location.state;

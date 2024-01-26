@@ -6,12 +6,18 @@ type ContextType = {
   children: ReactNode;
 };
 
+type LoggedInUserType = {
+  id: string;
+  email: string;
+};
+
 type LoginType = {
   email: string;
   password: string;
 };
 
 type ContextValueTypes = {
+  loggedInUser: LoggedInUserType;
   loginInfo: LoginType;
   isRememberMeChecked: boolean;
   errorMessage: string;
@@ -46,17 +52,20 @@ export const LoginContextProvider: React.FC<ContextType> = ({ children }) => {
   };
 
   const handlePasswordInput = (e: FormEvent<HTMLInputElement>) => {
+    setErrorMessage('');
     const target = e.target as HTMLInputElement;
     setLoginInfo(prev => ({ ...prev, password: target.value }));
   };
 
   const handleEmailInput = (e: FormEvent<HTMLInputElement>) => {
+    setErrorMessage('');
     const target = e.target as HTMLInputElement;
     setLoginInfo(prev => ({ ...prev, email: target.value }));
   };
 
   const contextValue: ContextValueTypes = {
     // states
+    loggedInUser: loggedInUser,
     loginInfo: loginInfo,
     isRememberMeChecked: isRememberMeChecked,
     errorMessage: errorMessage,

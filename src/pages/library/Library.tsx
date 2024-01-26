@@ -1,23 +1,25 @@
 import { useEffect, useContext } from 'react';
 import BookContainer from './BookContainer';
 import FormContainer from './FormContainer';
-import { useLocation } from 'react-router-dom';
 import { LibraryContext } from '../../context/LibraryContext';
+import { LoginContext } from '../../context/LoginContext';
+import { useNavigate } from 'react-router-dom';
 
 function Library() {
   const libraryContext = useContext(LibraryContext);
+  const loginContext = useContext(LoginContext);
 
-  if (!libraryContext) {
+  if (!libraryContext || !loginContext) {
     return;
   }
 
   const { books, error, setBooks, setError } = libraryContext;
+  const { loggedInUser } = loginContext;
 
-  const location = useLocation();
-  const email = location.state.email;
+  const navigate = useNavigate();
+
   useEffect(() => {
-    console.log(location.state);
-    console.log(email);
+    fetchBooks();
   }, []);
 
   const fetchBooks = async () => {
@@ -38,25 +40,36 @@ function Library() {
     }
   };
 
+  const handleClickOnLogout = () => {};
+  navigate('/');
   return (
     <>
-      <main className="flex flex-col gap-2 px-5 w-[400px]">
-        <button>Logout</button>
-        <p>Logged in as {email}</p>
-        <div className="flex flex-wrap gap-6 mt-[100px] justify-center">
-          {error ? (
-            <p>Error: {error}</p>
-          ) : books.length > 0 ? (
-            books.map(book => {
-              const { id } = book;
-              return <BookContainer key={id} bookObject={book} fetchBooks={fetchBooks} />;
-            })
-          ) : (
-            <p>No books avaiable</p>
-          )}
-        </div>
-        <FormContainer fetchBooks={fetchBooks} />
-      </main>
+      <div className="w-full h-full relative">
+        <header className="w-screen h-12 bg-[#7F265B] border-b-2 border-solid absolute border-purple-600 z-10"></header>
+        <main className="w-full h-full flex gap-10 justify-center relative ">
+          <div className="w-[250px] h-full border border-r border-red-600 absolute left-0 gap-2 bg-white flex flex-col items-center justify-end pb-8">
+            <p>Logged in as {loggedInUser.email}</p>
+            <button className="text-lg">Logout</button>
+          </div>
+          <div>
+            <div className="flex flex-wrap gap-6 mt-[100px] justify-center">
+              {error ? (
+                <p>Error: {error}</p>
+              ) : books.length > 0 ? (
+                books.map(book => {
+                  const { id } = book;
+                  return <BookContainer key={id} bookObject={book} fetchBooks={fetchBooks} />;
+                })
+              ) : (
+                <p>No books avaiable</p>
+              )}
+            </div>
+            <div className="w-[400px]">
+              <FormContainer fetchBooks={fetchBooks} />
+            </div>
+          </div>
+        </main>
+      </div>
     </>
   );
 }
