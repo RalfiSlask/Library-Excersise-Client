@@ -1,14 +1,14 @@
-import { LoginContext } from '../../context/LoginContext';
 import { useContext } from 'react';
+import { CreateAccountContext } from '../../context/CreateAccountContext';
 
-const PasswordInputContainer = () => {
-  const loginContext = useContext(LoginContext);
+const CreatePasswordInput = () => {
+  const createAccountContext = useContext(CreateAccountContext);
 
-  if (!loginContext) {
+  if (!createAccountContext) {
     return;
   }
 
-  const { handlePasswordInput, loginInfo } = loginContext;
+  const { userInfo, handlePasswordInput } = createAccountContext;
 
   return (
     <div className="flex flex-col gap-2">
@@ -24,10 +24,10 @@ const PasswordInputContainer = () => {
         type="text"
         name="passwordInput"
         id="passwordInput"
-        value={loginInfo.password}
+        value={userInfo.password}
       />
     </div>
   );
 };
 
-export default PasswordInputContainer;
+export default CreatePasswordInput;

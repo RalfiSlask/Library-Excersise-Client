@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState, FormEvent } from 'react';
+import { ReactNode, createContext, useState, FormEvent, useEffect } from 'react';
 
 export const LoginContext = createContext<ContextValueTypes | undefined>(undefined);
 
@@ -41,6 +41,10 @@ export const LoginContextProvider: React.FC<ContextType> = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState({ id: '', email: '' });
   const [isRememberMeChecked, setIsRemeberMeChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    console.log(loggedInUser);
+  }, [loggedInUser]);
 
   const handleLoginReset = () => {
     setLoginInfo({ email: '', password: '' });

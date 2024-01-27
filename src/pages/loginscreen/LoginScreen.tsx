@@ -1,4 +1,4 @@
-import { FormEvent, useContext } from 'react';
+import { FormEvent, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../context/LoginContext';
 import EmailInputContainer from './EmailInputContainer';
@@ -34,6 +34,7 @@ const LoginScreen = () => {
       });
       if (response.ok) {
         const jsonData = await response.json();
+        console.log(jsonData);
         if (jsonData.email) {
           localStorage.setItem('user', JSON.stringify({ id: jsonData.id, email: jsonData.email }));
           setLoggedInUser({ id: jsonData.id, email: jsonData.email });
