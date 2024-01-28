@@ -1,12 +1,8 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import GoBackButton from '../../components/GoBackButton';
 
 const BookInfo = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleClickOnGoBack = () => {
-    navigate('/library');
-  };
 
   const { bookName, loaned, author } = location.state;
 
@@ -15,7 +11,7 @@ const BookInfo = () => {
       <h2 className="text-[1.75rem] mt-10">{bookName}</h2>
       <p>{author}</p>
       <button>{loaned ? 'Loaned' : 'Not loaned'}</button>
-      <button onClick={handleClickOnGoBack}>Go back</button>
+      <GoBackButton path={'/library'} />
     </div>
   );
 };

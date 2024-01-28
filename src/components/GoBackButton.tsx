@@ -1,7 +1,11 @@
 import { useContext } from 'react';
 import { SharedContext } from '../context/SharedContext';
 
-const GoBackButton = () => {
+interface IGoBackButtonProps {
+  path: string;
+}
+
+const GoBackButton: React.FC<IGoBackButtonProps> = ({ path }) => {
   const sharedContext = useContext(SharedContext);
 
   if (!sharedContext) {
@@ -13,7 +17,7 @@ const GoBackButton = () => {
   return (
     <button
       onClick={() => {
-        handleClickOnGoBack('/');
+        handleClickOnGoBack(path);
       }}
       className="button-purple h-10"
     >

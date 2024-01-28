@@ -17,7 +17,7 @@ const CreateAccount = () => {
   return (
     <main className="w-full flex justify-center relative">
       <div className="absolute left-4 top-4">
-        <GoBackButton />
+        <GoBackButton path={'/'} />
       </div>
       <div className="flex flex-col gap-10 mt-[200px] w-[600px]">
         <h1 className="text-[#525252] text-[2.25rem] font-bold">Create Account</h1>

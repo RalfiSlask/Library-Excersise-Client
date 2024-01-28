@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['standard-with-typescript', 'prettier'],
+  extends: ['plugin:react/recommended', 'prettier', 'plugin:import/typescript', 'plugin:prettier/recommended'],
   settings: {
     react: {
       version: '18.2.0',
@@ -22,7 +22,7 @@ module.exports = {
     },
   ],
   parserOptions: {
-    requreConfigFile: false,
+    requireConfigFile: false,
     ecmaVersion: 'latest',
     sourceType: 'module',
     ecmaFeatures: {
