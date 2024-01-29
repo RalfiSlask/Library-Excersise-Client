@@ -1,13 +1,18 @@
 import { createContext, ReactNode, useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+/* import { useNavigate } from 'react-router-dom'; */
 
 type ContextTypes = {
   userInfo: {
     email: string;
     password: string;
   };
+  setUserInfo: React.Dispatch<
+    React.SetStateAction<{
+      email: string;
+      password: string;
+    }>
+  >;
   handlePasswordInput: (e: FormEvent<HTMLInputElement>) => void;
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
   handleEmailInput: (e: FormEvent<HTMLInputElement>) => void;
   handleReset: () => void;
 };
@@ -19,7 +24,7 @@ type ContextType = {
 };
 
 export const CreateContextProvider: React.FC<ContextType> = ({ children }) => {
-  const navigate = useNavigate();
+  /*   const navigate = useNavigate(); */
 
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState('');
@@ -27,33 +32,6 @@ export const CreateContextProvider: React.FC<ContextType> = ({ children }) => {
   const handleReset = () => {
     setUserInfo({ email: '', password: '' });
     setErrorMessage('');
-  };
-
-  const postUserInfo = async () => {
-    try {
-      const response = await fetch('http://localhost:3000/login/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userInfo),
-      });
-      if (response.ok) {
-        const jsonData = await response.json();
-        console.log(jsonData);
-        navigate('/');
-      } else {
-        console.log('mumma');
-      }
-    } catch (err) {
-      console.log(err, 'failed to fetch data');
-    }
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await postUserInfo();
-    setUserInfo({ email: '', password: '' });
   };
 
   const handleEmailInput = (e: FormEvent<HTMLInputElement>) => {
@@ -68,8 +46,8 @@ export const CreateContextProvider: React.FC<ContextType> = ({ children }) => {
 
   const contextValue = {
     userInfo: userInfo,
+    setUserInfo: setUserInfo,
     handlePasswordInput: handlePasswordInput,
-    handleSubmit: handleSubmit,
     handleEmailInput: handleEmailInput,
     handleReset: handleReset,
   };

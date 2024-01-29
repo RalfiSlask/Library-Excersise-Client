@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, FormEvent } from 'react';
 import { CreateAccountContext } from '../../context/CreateAccountContext';
 import CreateEmailInput from './CreateEmailInput';
 import CreatePasswordInput from './CreatePasswordInput';
@@ -12,7 +12,34 @@ const CreateAccount = () => {
     return;
   }
 
-  const { handleSubmit, handleReset } = createAccountContext;
+  const { setUserInfo, handleReset, userInfo } = createAccountContext;
+
+  const postUserInfo = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/login/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userInfo),
+      });
+      if (response.ok) {
+        const jsonData = await response.json();
+        console.log(jsonData);
+        /*         navigate('/'); */
+      } else {
+        console.log('mumma');
+      }
+    } catch (err) {
+      console.log(err, 'failed to fetch data');
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await postUserInfo();
+    setUserInfo({ email: '', password: '' });
+  };
 
   return (
     <main className="w-full flex justify-center relative">
