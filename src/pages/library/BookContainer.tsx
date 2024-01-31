@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { IBook } from '../../utils/types';
+import { useEffect } from 'react';
 
 interface IBookProps {
   bookObject: IBook;
@@ -31,8 +32,12 @@ const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
     }
   };
 
+  useEffect(() => {
+    console.log(id);
+  }, [id]);
+
   const deleteBook = async () => {
-    const response = await fetch(`http://localhost:3000/delete/${id}`, {
+    const response = await fetch(`http://localhost:3000/library/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +63,7 @@ const BookContainer = ({ bookObject, fetchBooks }: IBookProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 items-center bg-white p-4 rounded-xl">
+    <div className="flex flex-col gap-4 items-center bg-white p-4 rounded-xl w-[250px]">
       <h2 onClick={handleClickOnBook} className="cursor-pointer hover:opacity-70">
         {bookName}
       </h2>

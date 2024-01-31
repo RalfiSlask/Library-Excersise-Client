@@ -1,4 +1,4 @@
-import { useEffect, useContext, FormEvent, useState } from 'react';
+import { useContext, FormEvent, useState, useEffect } from 'react';
 import BookContainer from './BookContainer';
 import FormContainer from './FormContainer';
 import { LibraryContext } from '../../context/LibraryContext';
@@ -14,25 +14,17 @@ function Library() {
     return;
   }
 
-  const { books, error, setBooks, setError } = libraryContext;
+  const { books, error, setError, setBooks } = libraryContext;
   const { loggedInUser } = loginContext;
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(loggedInUser);
-  }, []);
-
-  useEffect(() => {
-    console.log(imageUrl);
-  }, [imageUrl]);
 
   const fetchBooks = async () => {
     setError(null);
     try {
       const response = await fetch('http://localhost:3000/library');
+      console.log('response', response);
       if (response.ok) {
         const jsonBooks = await response.json();
+        console.log('json', jsonBooks);
         setBooks(jsonBooks);
       } else {
         console.log('failed to fetch books');
@@ -45,6 +37,12 @@ function Library() {
     }
   };
 
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const navigate = useNavigate();
+
   const uploadProfilePicture = async (file: any) => {
     const formData = new FormData();
     formData.append('image', file);
@@ -52,15 +50,11 @@ function Library() {
     try {
       const response = await fetch(`http://localhost:3000/image/savefile/${loggedInUser.id}`, {
         method: 'POST',
-        /*      headers: {
-          'Content-Type': 'multipart/form-data',
-        }, */
         body: formData,
       });
       if (response.ok) {
         const jsonData = await response.json();
         // hantera här nedan
-        console.log(jsonData.imageUrl);
         setImageUrl(jsonData.imageUrl);
       }
     } catch (err) {
@@ -86,9 +80,11 @@ function Library() {
   return (
     <>
       <div className="w-full h-full relative">
-        <header className="w-screen h-12 bg-[#7F265B] border-b-2 border-solid absolute border-purple-600 z-10"></header>
-        <main className="w-full h-full flex gap-10 justify-center relative ">
-          <div className="w-[250px] h-full border border-r border-red-600 absolute left-0 gap-2 bg-white flex flex-col items-center justify-end pb-8">
+        <header className="w-screen h-14 bg-[#7F265B] border-b-2 border-solid fixed border-purple-600 z-10 px-4 flex items-center text-white">
+          <h1 className="text-[2rem]">Library</h1>
+        </header>
+        <main className="w-full h-full flex gap-10 justify-center relative pb-20 pl-[300px]">
+          <div className="w-[250px] h-full border border-r border-red-600 fixed left-0 gap-2 bg-white flex flex-col items-center justify-end pb-8">
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
               <input type="file" name="image" />
               <button type="submit">Send</button>
@@ -99,7 +95,7 @@ function Library() {
               Logout
             </button>
           </div>
-          <div>
+          <div className="w-[1110px] flex flex-col items-center gap-20">
             <div className="flex flex-wrap gap-6 mt-[100px] justify-center">
               {error ? (
                 <p>Error: {error}</p>

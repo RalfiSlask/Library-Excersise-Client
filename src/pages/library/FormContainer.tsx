@@ -50,6 +50,7 @@ const FormContainer = ({ fetchBooks }: IfetchProp) => {
       await submitBook();
       await fetchBooks();
       setInputValues({ bookName: '', author: '' });
+      alert('added book!');
     }
   };
 
